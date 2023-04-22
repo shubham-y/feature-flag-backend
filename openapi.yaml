@@ -22,7 +22,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/ApiResponses/feature-flags'
+                $ref: '#/components/schemas/Feature-flags'
         '404':
           description: Feature flags not found.
     post:
@@ -35,7 +35,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/ApiRequests/feature-flag'
+              $ref: '#/components/schemas/Request-Feature-flag'
       responses:
         '201':
           description: Successful response
@@ -60,7 +60,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/ApiResponses/feature-flag'
+                $ref: '#/components/schemas/Feature-flag'
         '404':
           description: feature flag not found
         '400':
@@ -82,7 +82,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/ApiRequests/feature-flag-update'
+              $ref: '#/components/schemas/Request-Feature-flag-update'
       responses:
         '200':
           description: Successful response
@@ -94,13 +94,20 @@ paths:
         - featureFlags-User
       summary: Lists all the feature flags for the user
       description: Shows the feature flag for a user.
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          description: Id of user
+          schema: 
+            type: string
       responses:
         '200':
           description: Successful response
           content:
             application/json:
               schema: 
-                $ref: '#/ApiResponses/User-feature-flag-responses'
+                $ref: '#/components/schemas/User-feature-flag-responses'
         '404':
           description: Any feature flags not enabled for the user
 
@@ -130,7 +137,7 @@ paths:
           content: 
             application/json:
               schema: 
-                $ref: '#/ApiResponses/User-feature-flag-response'
+                $ref: '#/components/schemas/User-feature-flag-response'
         '400':
           description: Invalid input passed
           
@@ -180,7 +187,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/ApiRequests/featureflag-user-update'
+              $ref: '#/components/schemas/Request-Featureflag-user-update'
 
       responses:
         '200':
@@ -190,79 +197,79 @@ paths:
        
     
 
-ApiResponses:
-  feature-flag:
-    type: object
-    properties: 
-      flagId:
-        type: string
-      flagName: 
-        type: string
-      flagDescription:
-        type: string
-      deactivated:
-        type: boolean
-        
-  User-feature-flag-response:
-    type: object
-    properties:
-      userId:
-        type: string
-      flagId:
-        type: string
-      enabled:
-        type: boolean
-  User-feature-flag-responses:
-    type: array
-    items: 
+components:
+  schemas:
+    Feature-flag:
       type: object
-      properties:
-        userId:
-          type: string
-        flagId: 
-          type: string
-        enabled: 
-          type: boolean
-          
-  feature-flags:        
-    type: array
-    items:
-      type: object
-      properties:
+      properties: 
         flagId:
           type: string
-        flagName:
+        flagName: 
           type: string
         flagDescription:
           type: string
         deactivated:
           type: boolean
+            
+    User-feature-flag-response:
+      type: object
+      properties:
+        userId:
+          type: string
+        flagId:
+          type: string
+        enabled:
+          type: boolean
+    User-feature-flag-responses:
+      type: array
+      items: 
+        type: object
+        properties:
+          userId:
+            type: string
+          flagId: 
+            type: string
+          enabled: 
+            type: boolean
+            
+    Feature-flags:        
+      type: array
+      items:
+        type: object
+        properties:
+          flagId:
+            type: string
+          flagName:
+            type: string
+          flagDescription:
+            type: string
+          deactivated:
+            type: boolean
 
-ApiRequests:
-  feature-flag:
-    type: object
-    properties:
-      flagId:
-        type: string
-      flagName: 
-        type: string
-      flagDescription:
-        type: string
-  feature-flag-update:
-    type: object
-    properties: 
-      flagId:
-        type: string
-      flagName:
-        type: string
-      deactivated:
-        type: boolean
-      flagDescription:
-        type: string
-  
-  featureflag-user-update:
-    type: object
-    properties:
-      enabled:  
-        type: boolean
+    Request-Feature-flag:
+      type: object
+      properties:
+        flagId:
+          type: string
+        flagName: 
+          type: string
+        flagDescription:
+          type: string
+    Request-Feature-flag-update:
+      type: object
+      properties: 
+        flagId:
+          type: string
+        flagName:
+          type: string
+        deactivated:
+          type: boolean
+        flagDescription:
+          type: string
     
+    Request-Featureflag-user-update:
+      type: object
+      properties:
+        enabled:  
+          type: boolean
+ 
